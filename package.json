@@ -1,0 +1,16 @@
+{
+  "name": "test-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "postinstall": "patch-package"
+  },
+  "dependencies": {
+    "patch-package": "^8.0.0"
+  },
+  "devDependencies": {
+    "vite": "5.0.10"
+  }
+}

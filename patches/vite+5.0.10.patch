@@ -1,0 +1,31 @@
+diff --git a/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js b/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js
+index 1e23ec2..ca1668e 100644
+--- a/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js
++++ b/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js
+@@ -59111,7 +59111,7 @@ function isBareRelative(url) {
+     return wordCharRE.test(url[0]) && !url.includes(':');
+ }
+ const isSrcSet = (attr) => attr.name === 'srcset' && attr.prefix === undefined;
+-const processNodeUrl = (url, useSrcSetReplacer, config, htmlPath, originalUrl, server) => {
++const processNodeUrl = (url, useSrcSetReplacer, config, htmlPath, originalUrl, server, isClassicScriptLink) => {
+     // prefix with base (dev only, base is never relative)
+     const replacer = (url) => {
+         if (server?.moduleGraph) {
+@@ -59135,7 +59135,7 @@ const processNodeUrl = (url, useSrcSetReplacer, config, htmlPath, originalUrl, s
+                 htmlPath === '/index.html')) {
+             url = path$o.posix.join(config.base, url);
+         }
+-        if (server && shouldPreTransform(url, config)) {
++        if (server && !isClassicScriptLink && shouldPreTransform(url, config)) {
+             let preTransformUrl;
+             if (url[0] === '/' && url[1] !== '/') {
+                 preTransformUrl = url;
+@@ -59213,7 +59213,7 @@ const devHtmlHook = async (html, { path: htmlPath, filename, server, originalUrl
+         if (node.nodeName === 'script') {
+             const { src, sourceCodeLocation, isModule } = getScriptInfo(node);
+             if (src) {
+-                const processedUrl = processNodeUrl(src.value, isSrcSet(src), config, htmlPath, originalUrl, server);
++                const processedUrl = processNodeUrl(src.value, isSrcSet(src), config, htmlPath, originalUrl, server, !isModule);
+                 if (processedUrl !== src.value) {
+                     overwriteAttrValue(s, sourceCodeLocation, processedUrl);
+                 }
